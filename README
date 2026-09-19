@@ -1,0 +1,13 @@
+# Distributed Execution of SQL Queries with Trino — Team 18
+
+## Setup order
+1. Deploy Trino on all 3 VMs (coordinator on VM1, workers on VM2/VM3).
+2. Install Ignite (VM1), Cassandra (VM2), MariaDB (VM3).
+3. Generate TPC-DS data: `tpcds-kit/tools/dsdgen -SCALE 15`
+4. Load data:
+   - Ignite: run scripts in `sql/ignite/` via SQLLine (`!run <file>`)
+   - MariaDB: `mysql -u user_trino -proot --local-infile=1 db < sql/mariadb/create-tables.sql`
+5. Prepare queries: `queries/helpfiles/modify_queries.sh <dir>` then `append_semicolons.sh <dir>`
+6. Run benchmarks: `queries/helpfiles/benchmark1.sh <query_dir> <worker_label>`
+
+See full report for detailed setup and results.
